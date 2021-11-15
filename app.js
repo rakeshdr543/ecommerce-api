@@ -2,16 +2,22 @@ require('dotenv').config()
 require('express-async-errors')
 
 const express=require('express')
+const app=express()
+
+// packages
+const morgan=require('morgan')
 
 const connectDB=require('./db/connect')
 
 // error handler
 const notFoundMiddleware=require('./middleware/not-found')
 const errorHandlerMiddleware=require('./middleware/error-handler')
+const cookieParser = require('cookie-parser')
 
-const app=express()
 
 app.use(express.json())
+app.use(morgan('tiny'))
+app.use(cookieParser(process.env.JWT_SECRET))
 
 // routes
 
